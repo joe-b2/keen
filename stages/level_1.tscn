@@ -96,6 +96,10 @@ transform/pos = Vector2( 48, 160 )
 
 transform/pos = Vector2( 224, 320 )
 
+[node name="slug4" parent="Map Objects" instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 192, 176 )
+
 [node name="Player" parent="." instance=ExtResource( 7 )]
 
 editor/display_folded = true
