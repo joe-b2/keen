@@ -1,0 +1,255 @@
+[gd_scene load_steps=16 format=1]
+
+[ext_resource path="res://scripts/enemies/slug.gd" type="Script" id=1]
+[ext_resource path="res://gfx/enemys/slug/0.png" type="Texture" id=2]
+[ext_resource path="res://gfx/enemys/slug/1.png" type="Texture" id=3]
+[ext_resource path="res://gfx/enemys/slug/2.png" type="Texture" id=4]
+[ext_resource path="res://gfx/enemys/slug/3.png" type="Texture" id=5]
+[ext_resource path="res://gfx/enemys/slug/4.png" type="Texture" id=6]
+[ext_resource path="res://gfx/enemys/slug/star2.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 5.42644, 10 )
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "dead1"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 4 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D2:visibility/visible")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ true ] }
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "dead2"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 3 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D2:visibility/visible")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ true ] }
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "pooping"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 2 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D2:visibility/visible")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ false ] }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 1 ), "transitions":FloatArray( 1 ), "values":[ { "args":[  ], "method":"post_poop" } ] }
+
+[sub_resource type="Animation" id=6]
+
+length = 0.8
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.4 ), "transitions":FloatArray( 1, 1 ), "update":1, "values":[ 0, 1 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D2:visibility/visible")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ false ] }
+
+[sub_resource type="RectangleShape2D" id=7]
+
+custom_solver_bias = 0.0
+extents = Vector2( 1.64391, 1.74196 )
+
+[sub_resource type="RectangleShape2D" id=8]
+
+custom_solver_bias = 0.0
+extents = Vector2( 1.779, 1.73697 )
+
+[node name="slug" type="KinematicBody2D"]
+
+z/z = 1
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.27018, 5.94397 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
+frames = SubResource( 2 )
+animation = "default"
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/dead1 = SubResource( 3 )
+anims/dead2 = SubResource( 4 )
+anims/pooping = SubResource( 5 )
+anims/walking = SubResource( 6 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "walking"
+
+[node name="Particles2D2" type="Particles2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 9.25002, -9.75001 )
+transform/scale = Vector2( 1, 0.5 )
+config/amount = 5
+config/lifetime = 2.0
+config/preprocess = 0.1
+config/texture = ExtResource( 7 )
+params/direction = 213.33
+params/spread = 0.0
+params/linear_velocity = 20.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 3.2
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 0.0
+params/anim_initial_pos = 0.0
+
+[node name="slug_col" type="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( -0.27018, 5.94397 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="right_ledge_detect" type="Area2D" parent="."]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 11.0544, 26.2125 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = { "_edit_lock_":true }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right_ledge_detect"]
+
+transform/pos = Vector2( 11.0544, 26.2125 )
+shape = SubResource( 7 )
+trigger = true
+_update_shape_index = 0
+
+[node name="left_ledge_detect" type="Area2D" parent="."]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -8.80389, 25.8072 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = { "_edit_lock_":true }
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="left_ledge_detect"]
+
+transform/pos = Vector2( -8.80389, 25.8072 )
+shape = SubResource( 7 )
+trigger = true
+_update_shape_index = 0
+
+[node name="right_wall_detect" type="Area2D" parent="."]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 10.537, -0.67545 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = { "_edit_lock_":true }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right_wall_detect"]
+
+transform/pos = Vector2( 10.537, -0.67545 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[node name="left_wall_detect" type="Area2D" parent="."]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -9.86159, -0.405271 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+__meta__ = { "_edit_lock_":true }
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="left_wall_detect"]
+
+transform/pos = Vector2( -9.86159, -0.405271 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_exit" from="right_ledge_detect" to="." method="_on_right_ledge_detect_body_exit"]
+
+[connection signal="body_exit" from="left_ledge_detect" to="." method="_on_left_ledge_detect_body_exit"]
+
+[connection signal="body_enter" from="right_wall_detect" to="." method="_on_right_wall_detect_body_enter"]
+
+[connection signal="body_enter" from="left_wall_detect" to="." method="_on_left_wall_detect_body_enter"]
+
+
