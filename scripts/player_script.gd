@@ -58,7 +58,10 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed("ui_left") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(true)
 			movement -= 1
-			on_pole = false
+			if on_pole && !on_pole_hole:
+				on_pole = false
+			elif on_pole && on_pole_hole:
+				movement += 1
 			if !facing == "left" && on_ledge:
 					on_ledge = false
 					get_node("AnimationPlayer").set_current_animation("falling_down")
@@ -67,7 +70,12 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed("ui_right") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(false)
 			movement += 1
-			on_pole = false
+			
+			if on_pole && !on_pole_hole:
+				on_pole = false
+			elif on_pole && on_pole_hole:
+				movement -= 1
+			
 			if !facing == "right" && on_ledge:
 					on_ledge = false
 					get_node("AnimationPlayer").set_current_animation("falling_down")
