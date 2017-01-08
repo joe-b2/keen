@@ -36,7 +36,6 @@ var on_pole = false
 var pole_x = 0
 var pole_top = 0
 var pole_bot = 0
-var on_pole_hole = false
 
 # Shooting
 var shot_type = "shoot_standing"
@@ -58,10 +57,7 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed("ui_left") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(true)
 			movement -= 1
-			if on_pole && !on_pole_hole:
-				on_pole = false
-			elif on_pole && on_pole_hole:
-				movement += 1
+			on_pole = false
 			if !facing == "left" && on_ledge:
 					on_ledge = false
 					get_node("AnimationPlayer").set_current_animation("falling_down")
@@ -69,12 +65,8 @@ func _fixed_process(delta):
 		
 		if (Input.is_action_pressed("ui_right") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(false)
-			movement += 1
-			
-			if on_pole && !on_pole_hole:
-				on_pole = false
-			elif on_pole && on_pole_hole:
-				movement -= 1
+			movement +=1
+			on_pole = false
 			
 			if !facing == "right" && on_ledge:
 					on_ledge = false
@@ -117,9 +109,9 @@ func _fixed_process(delta):
 			
 				p_movement *= POLE_CLIMB_SPEED
 				velocity.y = lerp(velocity.y, p_movement, ACCELERATION)
-		elif !on_pole_hole:
-				# Add Gravity
-				velocity += GRAVITY * delta
+				
+		# Add Gravity
+		velocity += GRAVITY * delta
 	
 		# Poles
 		if (touching_pole && !on_pogo):
@@ -137,7 +129,7 @@ func _fixed_process(delta):
 		# Can jump?
 		can_jump = is_move_and_slide_on_floor()
 		 
-		if (on_mp || on_pole || on_pole_hole) && !shooting:
+		if (on_mp || on_pole) && !shooting:
 			can_jump = true
 		
 		# Jump
