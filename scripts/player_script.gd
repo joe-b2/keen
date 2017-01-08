@@ -36,6 +36,8 @@ var on_pole = false
 var pole_x = 0
 var pole_top = 0
 var pole_bot = 0
+var at_top_of_pole = false
+
 
 # Shooting
 var shot_type = "shoot_standing"
@@ -57,7 +59,8 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed("ui_left") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(true)
 			movement -= 1
-			on_pole = false
+			if on_pole && !Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up"):
+				on_pole = false
 			if !facing == "left" && on_ledge:
 					on_ledge = false
 					get_node("AnimationPlayer").set_current_animation("falling_down")
@@ -66,7 +69,8 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed("ui_right") && !shooting):
 			get_node("AnimatedSprite").set_flip_h(false)
 			movement +=1
-			on_pole = false
+			if on_pole && !Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up"):
+				on_pole = false
 			
 			if !facing == "right" && on_ledge:
 					on_ledge = false
@@ -89,34 +93,34 @@ func _fixed_process(delta):
 				self.set_pos(Vector2(self.get_pos().x + mpxadj, mp_node.get_pos().y - 11))
 				
 		elif (on_pole):
-			if (self.get_pos().y > pole_bot - 2 || self.get_pos().y < pole_top):
+			var p_movement = 0
+			
+			if (self.get_pos().y < pole_top+18):
+				at_top = true
+			
+			if (self.get_pos().y > pole_bot-5):
 				on_pole = false
-			else:
-				var p_movement = 0
+				at_bot = true
 			
-				if (self.get_pos().y < pole_top+18):
-					at_top = true
-			
-				if (self.get_pos().y > pole_bot-5):
-					on_pole = false
-					at_bot = true
-			
-				if (Input.is_action_pressed("ui_up") && !at_top):
-					p_movement -= 1
+			if (Input.is_action_pressed("ui_up") && !at_top):
+				p_movement -= 1
 		
-				if (Input.is_action_pressed("ui_down") && !at_bot):
-					p_movement += 1
+			if (Input.is_action_pressed("ui_down") && !at_bot):
+				p_movement += 1
 			
-				p_movement *= POLE_CLIMB_SPEED
-				velocity.y = lerp(velocity.y, p_movement, ACCELERATION)
+			p_movement *= POLE_CLIMB_SPEED
+			velocity.y = lerp(velocity.y, p_movement, ACCELERATION)
 				
-		# Add Gravity
-		velocity += GRAVITY * delta
+		if !on_pole && !on_mp:
+			# Add Gravity
+			velocity += GRAVITY * delta
 	
 		# Poles
 		if (touching_pole && !on_pogo):
 			if (Input.is_action_pressed("ui_up") || Input.is_action_pressed("ui_down")):
-				if (self.get_pos().y > pole_bot - 2 || self.get_pos().y < pole_top):
+				if self.get_pos().y < pole_top && Input.is_action_pressed("ui_up"):
+					on_pole = false
+				elif self.get_pos().y > pole_bot - 1 && Input.is_action_pressed("ui_down"):
 					on_pole = false
 				else:
 					velocity.x = 0
@@ -131,6 +135,12 @@ func _fixed_process(delta):
 		 
 		if (on_mp || on_pole) && !shooting:
 			can_jump = true
+			
+		# At top of pole
+		if on_pole && at_top:
+			at_top_of_pole = true
+		else:
+			at_top_of_pole = false
 		
 		# Jump
 		if (!on_pogo && !shooting && can_jump && Input.is_action_pressed("jump")):
@@ -169,11 +179,11 @@ func _fixed_process(delta):
 		if on_ledge:
 			get_node("AnimationPlayer").set_current_animation("hanging")
 		if on_pole:
-			if (Input.is_action_pressed("ui_up") && get_node("AnimationPlayer").get_current_animation() != "up_pole") || at_top || at_bot:
+			if (Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down") && get_node("AnimationPlayer").get_current_animation() != "up_pole") || at_top || at_bot:
 				get_node("AnimationPlayer").set_current_animation("up_pole")
-			elif Input.is_action_pressed("ui_down") && get_node("AnimationPlayer").get_current_animation() != "down_pole":
+			elif Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up") && get_node("AnimationPlayer").get_current_animation() != "down_pole":
 				get_node("AnimationPlayer").play("down_pole")
-			elif !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down"):
+			elif (!Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")) || (Input.is_action_pressed("ui_up") && Input.is_action_pressed("ui_down")):
 				get_node("AnimationPlayer").play("pole_idle")
 		if can_jump && !on_pole && !on_pogo && !on_ledge && !shooting:
 			if Input.is_action_pressed("ui_left") || Input.is_action_pressed("ui_right"):

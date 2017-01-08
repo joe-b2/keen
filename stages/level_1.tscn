@@ -4,8 +4,8 @@
 [ext_resource path="res://scenes/map_objects/one_way_collision_block.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/map_objects/moving_platform.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/map_objects/pole.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/enemies/slug.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/map_objects/pole_hole.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/map_objects/pole_hole.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/enemies/slug.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=7]
 
 [node name="Node" type="Node"]
@@ -73,32 +73,32 @@ Speed = 50
 
 editor/display_folded = true
 transform/pos = Vector2( 176, 304 )
-extend_down = 11
+extend_down = 10
 
 [node name="pole2" parent="Map Objects" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( 400, 464 )
 extend_down = 5
 
-[node name="slug" parent="Map Objects" instance=ExtResource( 5 )]
+[node name="pole_hole" parent="Map Objects" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 176, 336 )
+
+[node name="slug" parent="Map Objects" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 624, 176 )
 
-[node name="slug2" parent="Map Objects" instance=ExtResource( 5 )]
+[node name="slug2" parent="Map Objects" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 48, 160 )
 
-[node name="slug3" parent="Map Objects" instance=ExtResource( 5 )]
+[node name="slug3" parent="Map Objects" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 224, 320 )
 
-[node name="slug4" parent="Map Objects" instance=ExtResource( 5 )]
+[node name="slug4" parent="Map Objects" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 192, 176 )
-
-[node name="pole_hole" parent="Map Objects" instance=ExtResource( 6 )]
-
-transform/pos = Vector2( 176, 336 )
 
 [node name="Player" parent="." instance=ExtResource( 7 )]
 

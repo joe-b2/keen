@@ -9,7 +9,6 @@ func _ready():
 
 
 func _on_pole_body_enter( body ):
-	#print(body.get_name() + " Entering")
 	if (body.get_name() == "Player"):
 		body.touching_pole = true
 		body.pole_x = self.get_pos().x + 8
@@ -18,6 +17,5 @@ func _on_pole_body_enter( body ):
 
 
 func _on_pole_body_exit( body ):
-	#print(body.get_name() + " Exiting")
 	if (body.get_name() == "Player"):
 		body.touching_pole = false
