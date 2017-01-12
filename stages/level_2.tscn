@@ -125,6 +125,7 @@ transform/pos = Vector2( 288, 288 )
 
 editor/display_folded = true
 transform/pos = Vector2( 1536, 256 )
+init_face_right = false
 
 [node name="Foreground TileMap" type="TileMap" parent="."]
 

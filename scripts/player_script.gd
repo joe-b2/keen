@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var shot = preload("res://scenes/shot.tscn")
+export var init_face_right = true
 
 # Laws of Physics
 const GRAVITY = Vector2(0, 400)
@@ -46,7 +47,9 @@ var shot_type = "shoot_standing"
 func _ready():
 	get_node("Lighting").show()
 	set_fixed_process(true)
-	
+	if !init_face_right:
+		facing = "left"
+		get_node("AnimatedSprite").set_flip_h(true)
 
 func _fixed_process(delta):
 	if !climbing:
