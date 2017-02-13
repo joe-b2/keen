@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://scripts/pole.gd" type="Script" id=1]
 [ext_resource path="res://gfx/map objects/pole_test.png" type="Texture" id=2]
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -12,9 +17,12 @@ extents = Vector2( 8, 8 )
 
 z/z = 1
 input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 1 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/1/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
@@ -24,12 +32,20 @@ collision/mask = 2
 script/script = ExtResource( 1 )
 extend_down = 0
 
-[node name="pole_col" type="CollisionShape2D" parent="."]
+[node name="pole_col" type="CollisionPolygon2D" parent="."]
 
+build_mode = 0
+polygon = Vector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+shape_range = Vector2( 0, 0 )
+trigger = false
+
+[node name="pole_col_shape" type="CollisionShape2D" parent="."]
+
+visibility/visible = false
 transform/pos = Vector2( 8, 8 )
 shape = SubResource( 1 )
 trigger = false
-_update_shape_index = 0
+_update_shape_index = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 

@@ -38,11 +38,15 @@ var pole_x = 0
 var pole_top = 0
 var pole_bot = 0
 var at_top_of_pole = false
-
+var at_top = false
+var at_bot = false
 
 # Shooting
 var shot_type = "shoot_standing"
 
+# Camera Variables
+var cam_limit = Vector2(0, 0)
+var cam_offset = Vector2(1000000,1000000)
 
 func _ready():
 	get_node("Lighting").show()
@@ -53,9 +57,6 @@ func _ready():
 
 func _fixed_process(delta):
 	if !climbing:
-		var at_top = false
-		var at_bot = false
-		
 		# Movement
 		var movement = 0
 		
@@ -95,13 +96,16 @@ func _fixed_process(delta):
 			if !on_pogo:
 				self.set_pos(Vector2(self.get_pos().x + mpxadj, mp_node.get_pos().y - 11))
 				
-		elif (on_pole):
+		
+		# Poles
+		
+		if (on_pole && touching_pole):
 			var p_movement = 0
 			
 			if (self.get_pos().y < pole_top+18):
 				at_top = true
 			
-			if (self.get_pos().y > pole_bot-5):
+			if (self.get_pos().y > pole_bot-5 && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
 				on_pole = false
 				at_bot = true
 			
@@ -110,15 +114,21 @@ func _fixed_process(delta):
 		
 			if (Input.is_action_pressed("ui_down") && !at_bot):
 				p_movement += 1
+				at_top = false
 			
 			p_movement *= POLE_CLIMB_SPEED
 			velocity.y = lerp(velocity.y, p_movement, ACCELERATION)
-				
+		
+		# Gravity
+		
 		if !on_pole && !on_mp:
 			# Add Gravity
 			velocity += GRAVITY * delta
-	
-		# Poles
+		
+		# More Poles
+		if !touching_pole:
+			on_pole = false
+			
 		if (touching_pole && !on_pogo):
 			if (Input.is_action_pressed("ui_up") || Input.is_action_pressed("ui_down")):
 				if self.get_pos().y < pole_top && Input.is_action_pressed("ui_up"):
@@ -262,6 +272,12 @@ func post_shot():
 	get_node("AnimationPlayer").play("idle")
 	pass
 
+func set_camera_limits( left, top, right, bottom ):
+	get_node("Camera2D").set_limit(MARGIN_TOP, top)
+	get_node("Camera2D").set_limit(MARGIN_LEFT, left)    
+	get_node("Camera2D").set_limit(MARGIN_RIGHT, right)
+	get_node("Camera2D").set_limit(MARGIN_BOTTOM, bottom)
+
 func _on_ledge_det_body_enter( body ):
 	if body.get_name() == "Main TileMap":
 		on_ledge = true
@@ -270,3 +286,4 @@ func _on_ledge_det_body_enter( body ):
 func _on_ledge_det_body_exit( body ):
 	if body.get_name() == "Main TileMap":
 		on_ledge = false
+
