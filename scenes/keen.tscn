@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=1]
+[gd_scene load_steps=72 format=1]
 
 [ext_resource path="res://scripts/player_script.gd" type="Script" id=1]
 [ext_resource path="res://gfx/keen/1.png" type="Texture" id=2]
@@ -46,6 +46,7 @@
 [ext_resource path="res://gfx/keen/9.png" type="Texture" id=44]
 [ext_resource path="res://gfx/keen/44.png" type="Texture" id=45]
 [ext_resource path="res://gfx/lighting/player_mask.png" type="Texture" id=46]
+[ext_resource path="res://scenes/fade_screen.tscn" type="PackedScene" id=47]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -91,6 +92,28 @@ tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4, 0.6, 0.8 ), "transitions":Flo
 
 [sub_resource type="Animation" id=6]
 
+resource/name = "enter_door"
+length = 1.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.3, 0.6, 0.9 ), "transitions":FloatArray( 1, 1, 1, 1 ), "update":1, "values":[ 34, 35, 36, 37 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0, 1.2 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ Vector2( 0, 0 ), Vector2( 0, -24 ) ] }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 1.2 ), "transitions":FloatArray( 1 ), "values":[ { "args":[  ], "method":"enter_door" } ] }
+
+[sub_resource type="Animation" id=7]
+
 length = 5.0
 loop = true
 step = 0.1
@@ -100,9 +123,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 3, 4 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 41, 40, 41 ] }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 
-resource/name = "hanging"
 length = 1.0
 loop = true
 step = 0.1
@@ -112,7 +134,7 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 5 ] }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 
 length = 45.0
 loop = true
@@ -122,17 +144,11 @@ tracks/0/path = NodePath("AnimatedSprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 10, 11, 15, 16, 25, 28.1, 29, 39, 42 ), "transitions":FloatArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), "update":1, "values":[ 0, 1, 0, 2, 0, 42, 10, 0, 2, 0 ] }
-
-[sub_resource type="Animation" id=9]
-
-length = 1.0
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:frame")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 39 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":0, "values":[ Vector2( 0, 0 ) ] }
 
 [sub_resource type="Animation" id=10]
 
@@ -143,7 +159,7 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 13 ] }
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 39 ] }
 
 [sub_resource type="Animation" id=11]
 
@@ -154,7 +170,7 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 12 ] }
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 13 ] }
 
 [sub_resource type="Animation" id=12]
 
@@ -165,9 +181,20 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 14 ] }
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 12 ] }
 
 [sub_resource type="Animation" id=13]
+
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 14 ] }
+
+[sub_resource type="Animation" id=14]
 
 length = 0.8
 loop = true
@@ -178,9 +205,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4, 0.6 ), "transitions":FloatArray( 1, 1, 1, 1 ), "update":1, "values":[ 11, 22, 33, 38 ] }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 
-resource/name = "shoot_down_falling"
 length = 1.0
 loop = true
 step = 0.1
@@ -190,9 +216,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 21 ] }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 
-resource/name = "shoot_down_on_pole"
 length = 1.0
 loop = true
 step = 0.1
@@ -202,9 +227,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 28 ] }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 
-resource/name = "shoot_falling"
 length = 0.5
 loop = true
 step = 0.1
@@ -219,9 +243,8 @@ tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 0.2, 0.5 ), "transitions":FloatArray( 1, 1 ), "values":[ { "args":[  ], "method":"fire_shot" }, { "args":[  ], "method":"post_shot" } ] }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=18]
 
-resource/name = "shoot_on_pole"
 length = 1.0
 loop = true
 step = 0.1
@@ -231,9 +254,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 29 ] }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=19]
 
-resource/name = "shoot_standing"
 length = 0.5
 loop = false
 step = 0.1
@@ -248,9 +270,8 @@ tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 0.2, 0.5 ), "transitions":FloatArray( 1, 1 ), "values":[ { "args":[  ], "method":"fire_shot" }, { "args":[  ], "method":"post_shot" } ] }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=20]
 
-resource/name = "shoot_up_jumping"
 length = 1.0
 loop = false
 step = 0.1
@@ -260,9 +281,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 23 ] }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=21]
 
-resource/name = "shoot_up_on_pole"
 length = 1.0
 loop = true
 step = 0.1
@@ -272,9 +292,8 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ 27 ] }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=22]
 
-resource/name = "shoot_up_standing"
 length = 1.0
 loop = true
 step = 0.1
@@ -289,7 +308,7 @@ tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = { "times":FloatArray( 1 ), "transitions":FloatArray( 1 ), "values":[ { "args":[  ], "method":"post_shot" } ] }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=23]
 
 length = 0.6
 loop = true
@@ -300,14 +319,14 @@ tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = { "times":FloatArray( 0, 0.2, 0.4 ), "transitions":FloatArray( 1, 1, 1 ), "update":1, "values":[ 14, 15, 16 ] }
 
-[sub_resource type="RectangleShape2D" id=23]
+[sub_resource type="RectangleShape2D" id=24]
 
 custom_solver_bias = 0.0
 extents = Vector2( 5, 0.5 )
 
 [node name="Keen" type="KinematicBody2D"]
 
-z/z = 1
+z/z = 4
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0.1 )
@@ -334,7 +353,7 @@ limit/bottom = 10000000
 limit/smoothed = false
 drag_margin/h_enabled = true
 drag_margin/v_enabled = true
-smoothing/enable = true
+smoothing/enable = false
 smoothing/speed = 20.0
 drag_margin/left = 0.2
 drag_margin/top = 0.2
@@ -345,6 +364,7 @@ drag_margin/bottom = 0.2
 
 frames = SubResource( 3 )
 animation = "default"
+frame = 34
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -353,23 +373,24 @@ playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/climbing = SubResource( 4 )
 anims/down_pole = SubResource( 5 )
-anims/falling_down = SubResource( 6 )
-anims/hanging = SubResource( 7 )
-anims/idle = SubResource( 8 )
-anims/jumping_up = SubResource( 9 )
-anims/pogo_down = SubResource( 10 )
-anims/pogo_up = SubResource( 11 )
-anims/pole_idle = SubResource( 12 )
-anims/run = SubResource( 13 )
-anims/shoot_down_falling = SubResource( 14 )
-anims/shoot_down_on_pole = SubResource( 15 )
-anims/shoot_falling = SubResource( 16 )
-anims/shoot_on_pole = SubResource( 17 )
-anims/shoot_standing = SubResource( 18 )
-anims/shoot_up_jumping = SubResource( 19 )
-anims/shoot_up_on_pole = SubResource( 20 )
-anims/shoot_up_standing = SubResource( 21 )
-anims/up_pole = SubResource( 22 )
+anims/enter_door = SubResource( 6 )
+anims/falling_down = SubResource( 7 )
+anims/hanging = SubResource( 8 )
+anims/idle = SubResource( 9 )
+anims/jumping_up = SubResource( 10 )
+anims/pogo_down = SubResource( 11 )
+anims/pogo_up = SubResource( 12 )
+anims/pole_idle = SubResource( 13 )
+anims/run = SubResource( 14 )
+anims/shoot_down_falling = SubResource( 15 )
+anims/shoot_down_on_pole = SubResource( 16 )
+anims/shoot_falling = SubResource( 17 )
+anims/shoot_on_pole = SubResource( 18 )
+anims/shoot_standing = SubResource( 19 )
+anims/shoot_up_jumping = SubResource( 20 )
+anims/shoot_up_on_pole = SubResource( 21 )
+anims/shoot_up_standing = SubResource( 22 )
+anims/up_pole = SubResource( 23 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -391,8 +412,9 @@ _update_shape_index = 1
 
 [node name="ledge_det" type="Area2D" parent="."]
 
+editor/display_folded = true
 input/pickable = true
-shapes/0/shape = SubResource( 23 )
+shapes/0/shape = SubResource( 24 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -14 )
 shapes/0/trigger = true
 gravity_vec = Vector2( 0, 1 )
@@ -403,7 +425,7 @@ angular_damp = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ledge_det"]
 
 transform/pos = Vector2( 0, -14 )
-shape = SubResource( 23 )
+shape = SubResource( 24 )
 trigger = true
 _update_shape_index = 0
 
@@ -412,6 +434,8 @@ _update_shape_index = 0
 visibility/visible = false
 z/z = 2
 texture = ExtResource( 46 )
+
+[node name="fade_screen" parent="." instance=ExtResource( 47 )]
 
 [connection signal="body_enter" from="ledge_det" to="." method="_on_ledge_det_body_enter"]
 
