@@ -326,7 +326,7 @@ extents = Vector2( 5, 0.5 )
 
 [node name="Keen" type="KinematicBody2D"]
 
-z/z = 4
+z/z = 1
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0.1 )
@@ -432,10 +432,12 @@ _update_shape_index = 0
 [node name="Lighting" type="Sprite" parent="."]
 
 visibility/visible = false
-z/z = 2
+z/z = 3
 texture = ExtResource( 46 )
 
 [node name="fade_screen" parent="." instance=ExtResource( 47 )]
+
+z/z = 4
 
 [connection signal="body_enter" from="ledge_det" to="." method="_on_ledge_det_body_enter"]
 

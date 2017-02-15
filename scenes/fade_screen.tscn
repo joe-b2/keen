@@ -40,7 +40,7 @@ tracks/0/keys = { "times":FloatArray( 0, 1.2, 2.4 ), "transitions":FloatArray( 1
 
 [node name="fade_screen" type="Sprite"]
 
-visibility/opacity = 0.0
+visibility/visible = false
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )
 

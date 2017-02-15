@@ -62,6 +62,8 @@ var entering_door = false
 
 func _ready():
 	get_node("Lighting").show()
+	get_node("fade_screen").show()
+	get_node("fade_screen").fade_in()
 	set_fixed_process(true)
 	if !init_face_right:
 		facing = "left"
@@ -324,13 +326,13 @@ func post_shot():
 	pass
 
 func enter_door():
-	#get_node("Camera2D").set_enable_follow_smoothing( false )
+	get_node("Camera2D").clear_current()
 	set_camera_limits(door_node.new_scene_top_left.x, door_node.new_scene_top_left.y, door_node.new_scene_bot_right.x, door_node.new_scene_bot_right.y)
 	self.set_pos(door_node.other_door_location)
 	get_node("AnimationPlayer").play("idle")
 	entering_door = false
+	get_node("Camera2D").make_current()
 	get_node("fade_screen").fade_in()
-	#get_node("Camera2D").set_enable_follow_smoothing( true )
 
 func set_camera_limits( left, top, right, bottom ):
 	get_node("Camera2D").set_limit(MARGIN_TOP, top)

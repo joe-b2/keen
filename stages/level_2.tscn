@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://stages/level_2.gd" type="Script" id=1]
 [ext_resource path="res://scenes/grassy_tileset.tres" type="TileSet" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/map_objects/one_way_collision_block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/map_objects/small_stone_door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=9]
+[ext_resource path="res://gfx/lighting/fade.png" type="Texture" id=10]
 
 [node name="Node" type="Node"]
 
@@ -55,8 +56,6 @@ tile_data = IntArray( 0, 35, 2, 35, 3, 35, 4, 35, 6, 35, 8, 35, 9, 35, 10, 35, 1
 __meta__ = { "_edit_lock_":true }
 
 [node name="Map Objects" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="pole" parent="Map Objects" instance=ExtResource( 3 )]
 
@@ -177,6 +176,14 @@ __meta__ = { "_edit_lock_":true }
 [node name="Lit Objects" type="Node2D" parent="."]
 
 z/z = 4
+__meta__ = { "_edit_lock_":true }
+
+[node name="black_screen" type="Sprite" parent="."]
+
+visibility/visible = false
+z/z = 4
+texture = ExtResource( 10 )
+centered = false
 __meta__ = { "_edit_lock_":true }
 
 
