@@ -23,6 +23,7 @@ var facing = "right"
 var on_ledge = false
 var climbing = false
 var shooting = false
+var dying = false
 
 # Jumping
 var wants_to_jump = false
@@ -61,23 +62,45 @@ var door_node
 var entering_door = false
 
 func _ready():
-	get_node("Lighting").show()
-	get_node("fade_screen").show()
-	get_node("fade_screen").fade_in()
 	set_fixed_process(true)
+	get_node("screen_glow").show()
 	if !init_face_right:
 		facing = "left"
 		get_node("AnimatedSprite").set_flip_h(true)
 
 func _fixed_process(delta):
+	# Get Player Input
+	var get_input_allowed = true
+	var left_pressed = false
+	var right_pressed = false
+	var up_pressed = false
+	var down_pressed = false
+	var jump_pressed = false
+	var jump_just_pressed = false
+	var pogo_just_pressed = false
+	var fire_shot_pressed = false
+	
+	if dying || entering_door || climbing:
+		get_input_allowed = false
+		
+	if get_input_allowed:
+		left_pressed = Input.is_action_pressed("ui_left")
+		right_pressed = Input.is_action_pressed("ui_right")
+		up_pressed = Input.is_action_pressed("ui_up")
+		down_pressed = Input.is_action_pressed("ui_down")
+		jump_pressed = Input.is_action_pressed("jump")
+		jump_just_pressed = Input.is_action_just_pressed("jump")
+		pogo_just_pressed = Input.is_action_just_pressed("pogo")
+		fire_shot_pressed = Input.is_action_pressed("fire_shot")
+		
 	if !climbing && !entering_door:
 		# Movement
 		var movement = 0
 		
-		if (Input.is_action_pressed("ui_left") && !shooting):
+		if (left_pressed && !shooting):
 			get_node("AnimatedSprite").set_flip_h(true)
 			movement -= 1
-			if on_pole && !Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up"):
+			if on_pole && !down_pressed && !up_pressed:
 				on_pole = false
 				force_jump_anim = true
 			if !facing == "left" && on_ledge:
@@ -85,10 +108,10 @@ func _fixed_process(delta):
 					get_node("AnimationPlayer").set_current_animation("falling_down")
 			facing = "left"
 		
-		if (Input.is_action_pressed("ui_right") && !shooting):
+		if (right_pressed && !shooting):
 			get_node("AnimatedSprite").set_flip_h(false)
 			movement +=1
-			if on_pole && !Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up"):
+			if on_pole && !down_pressed && !up_pressed:
 				on_pole = false
 				force_jump_anim = true
 			if !facing == "right" && on_ledge:
@@ -121,14 +144,14 @@ func _fixed_process(delta):
 			if (self.get_pos().y < pole_top+18):
 				at_top = true
 			
-			if (self.get_pos().y > pole_bot-5 && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
+			if (self.get_pos().y > pole_bot-5 && !up_pressed && !down_pressed):
 				on_pole = false
 				at_bot = true
 			
-			if (Input.is_action_pressed("ui_up") && !at_top):
+			if (up_pressed && !at_top):
 				p_movement -= 1
 		
-			if (Input.is_action_pressed("ui_down") && !at_bot):
+			if (down_pressed && !at_bot):
 				p_movement += 1
 				at_top = false
 			
@@ -146,10 +169,10 @@ func _fixed_process(delta):
 			on_pole = false
 			
 		if (touching_pole && !on_pogo):
-			if (Input.is_action_pressed("ui_up") || Input.is_action_pressed("ui_down")):
-				if self.get_pos().y < pole_top && Input.is_action_pressed("ui_up"):
+			if (up_pressed || down_pressed):
+				if self.get_pos().y < pole_top && up_pressed:
 					on_pole = false
-				elif self.get_pos().y > pole_bot - 1 && Input.is_action_pressed("ui_down"):
+				elif self.get_pos().y > pole_bot - 1 && down_pressed:
 					on_pole = false
 				else:
 					velocity.x = 0
@@ -187,12 +210,12 @@ func _fixed_process(delta):
 			wants_to_jump = false
 		
 		# Jump
-		if Input.is_action_just_pressed("jump"):
+		if jump_just_pressed:
 			wants_to_jump = true
 			wants_to_jump_timer = 0
 		if !on_pogo && !shooting && (allow_jump || can_jump) && wants_to_jump:
 			wants_to_jump = false
-			if (on_pole && !Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")):
+			if (on_pole && !up_pressed && !down_pressed):
 				velocity.y -= JUMP_FORCE/2
 	
 			if (!on_pole):
@@ -209,7 +232,7 @@ func _fixed_process(delta):
 			on_pole = false
 			can_jump = false
 		
-		if Input.is_action_just_pressed("pogo") && !shooting:
+		if pogo_just_pressed && !shooting:
 			if on_pogo:
 				on_pogo = false 
 				wants_to_jump = false
@@ -222,7 +245,7 @@ func _fixed_process(delta):
 		if on_pogo:
 			if !get_node("CollisionShape2D2").is_trigger():
 				get_node("CollisionShape2D2").set_trigger(true)
-			if can_jump && Input.is_action_pressed("jump"):
+			if can_jump && jump_pressed:
 				if !on_mp:
 					velocity.y -= HIGH_POGO_FORCE
 				else:
@@ -233,24 +256,24 @@ func _fixed_process(delta):
 				else:
 					velocity.y -= LOW_POGO_FORCE / 15
 		# Doors
-		if on_door && Input.is_action_pressed("ui_up") && can_jump:
-			self.set_pos(Vector2(door_node.get_pos().x + 18, self.get_pos().y))
+		if on_door && up_pressed && can_jump:
+			self.set_pos(Vector2(door_node.get_pos().x + (door_node.width / 2), self.get_pos().y))
 			get_node("AnimationPlayer").set_current_animation("enter_door")
 			entering_door = true
-			get_node("fade_screen").fade_out()
+			get_parent().get_node("light_effects/fade_screen").fade_out()
 		
 		# Animations
 		if on_ledge:
 			get_node("AnimationPlayer").set_current_animation("hanging")
 		if on_pole && !force_jump_anim:
-			if (Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down") && get_node("AnimationPlayer").get_current_animation() != "up_pole") || at_top || at_bot:
+			if (up_pressed && !down_pressed && get_node("AnimationPlayer").get_current_animation() != "up_pole") || at_top || at_bot:
 				get_node("AnimationPlayer").set_current_animation("up_pole")
-			elif Input.is_action_pressed("ui_down") && !Input.is_action_pressed("ui_up") && get_node("AnimationPlayer").get_current_animation() != "down_pole":
+			elif down_pressed && !up_pressed && get_node("AnimationPlayer").get_current_animation() != "down_pole":
 				get_node("AnimationPlayer").play("down_pole")
-			elif (!Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_down")) || (Input.is_action_pressed("ui_up") && Input.is_action_pressed("ui_down")):
+			elif (!up_pressed && !down_pressed) || (up_pressed && down_pressed):
 				get_node("AnimationPlayer").play("pole_idle")
 		if can_jump && !on_pole && !on_pogo && !on_ledge && !shooting && !entering_door:
-			if Input.is_action_pressed("ui_left") || Input.is_action_pressed("ui_right"):
+			if left_pressed || right_pressed:
 				if get_node("AnimationPlayer").get_current_animation() != "run":
 					get_node("AnimationPlayer").set_current_animation("run")
 			else: 
@@ -268,21 +291,21 @@ func _fixed_process(delta):
 			get_node("AnimationPlayer").set_current_animation("pogo_up")
 			if velocity.y >= 50:
 				get_node("AnimationPlayer").set_current_animation("pogo_down")
-		if on_ledge && facing == "right" && Input.is_action_pressed("ui_right") && velocity.y == 0:
+		if on_ledge && facing == "right" && right_pressed && velocity.y == 0:
 			climbing = true
 			get_node("AnimationPlayer").set_current_animation("climbing")
-		if on_ledge && facing == "left" && Input.is_action_pressed("ui_left") && velocity.y == 0:
+		if on_ledge && facing == "left" && left_pressed && velocity.y == 0:
 			climbing = true
 			get_node("AnimationPlayer").set_current_animation("climbing")
-		if !entering_door && !shooting && can_jump && !on_pole && !on_pogo && !on_ledge && Input.is_action_pressed("fire_shot") && Input.is_action_pressed("ui_up"):
+		if !entering_door && !shooting && can_jump && !on_pole && !on_pogo && !on_ledge && fire_shot_pressed && up_pressed:
 			shot_type = "shoot_up_standing"
 			shooting = true
 			get_node("AnimationPlayer").set_current_animation(shot_type)
-		if !entering_door && !shooting && can_jump && !on_pole && !on_pogo && !on_ledge && Input.is_action_pressed("fire_shot"):
+		if !entering_door && !shooting && can_jump && !on_pole && !on_pogo && !on_ledge && fire_shot_pressed:
 			shot_type = "shoot_standing"
 			shooting = true
 			get_node("AnimationPlayer").set_current_animation(shot_type)
-		if !entering_door && !shooting && !on_pogo && !can_jump && Input.is_action_pressed("fire_shot"):
+		if !entering_door && !shooting && !on_pogo && !can_jump && fire_shot_pressed:
 			shot_type = "shoot_falling"
 			shooting = true
 			get_node("AnimationPlayer").set_current_animation(shot_type)
@@ -332,13 +355,16 @@ func enter_door():
 	get_node("AnimationPlayer").play("idle")
 	entering_door = false
 	get_node("Camera2D").make_current()
-	get_node("fade_screen").fade_in()
+	get_parent().get_node("light_effects/fade_screen").fade_in()
 
 func set_camera_limits( left, top, right, bottom ):
 	get_node("Camera2D").set_limit(MARGIN_TOP, top)
 	get_node("Camera2D").set_limit(MARGIN_LEFT, left)    
 	get_node("Camera2D").set_limit(MARGIN_RIGHT, right)
 	get_node("Camera2D").set_limit(MARGIN_BOTTOM, bottom)
+	
+func post_die():
+	get_tree().reload_current_scene()
 
 func _on_ledge_det_body_enter( body ):
 	if body.get_name() == "Main TileMap":
@@ -349,3 +375,20 @@ func _on_ledge_det_body_exit( body ):
 	if body.get_name() == "Main TileMap":
 		on_ledge = false
 
+func _on_ledge_det_area_enter( area ):
+	var body = area.get_parent()
+	if body.has_node("door_col"):
+		door_node = body
+		on_door = true
+		print("entering " + body.get_name())
+	if body.has_node("death_col"):
+		dying = true
+		get_node("CollisionShape2D").set_trigger(true)
+		get_node("CollisionShape2D2").set_trigger(true)
+		
+func _on_ledge_det_area_exit( area ):
+	var body = area.get_parent()
+	if body.has_node("door_col"):
+		if body == door_node:
+			on_door = false
+			print("exiting " + body.get_name())

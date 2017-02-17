@@ -1,6 +1,8 @@
 extends Sprite
 
 func _ready():
+	self.show()
+	fade_in()
 	pass
 
 func fade_out():

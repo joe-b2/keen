@@ -18,7 +18,7 @@ new_scene_top_left = Vector2( 0, 0 )
 new_scene_bot_right = Vector2( 0, 0 )
 player_init_face_right = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="door_col" type="Area2D" parent="."]
 
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
@@ -29,15 +29,11 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_col"]
 
 transform/pos = Vector2( 16, 24 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
-
-[connection signal="body_enter" from="Area2D" to="." method="_on_Area2D_body_enter"]
-
-[connection signal="body_exit" from="Area2D" to="." method="_on_Area2D_body_exit"]
 
 

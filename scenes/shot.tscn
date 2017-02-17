@@ -75,6 +75,7 @@ _update_shape_index = 0
 
 [node name="Light2D" type="Light2D" parent="."]
 
+z/z = 5
 enabled = true
 editor_only = false
 texture = ExtResource( 7 )
