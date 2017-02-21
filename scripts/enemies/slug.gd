@@ -110,3 +110,4 @@ func die():
 	else:
 		get_node("AnimationPlayer").play("dead2")
 	get_node("slug_col").set_trigger(true)
+	get_node("death_col").queue_free()

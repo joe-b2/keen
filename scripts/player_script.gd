@@ -24,6 +24,7 @@ var on_ledge = false
 var climbing = false
 var shooting = false
 var dying = false
+var die_timer = 0
 
 # Jumping
 var wants_to_jump = false
@@ -69,6 +70,12 @@ func _ready():
 		get_node("AnimatedSprite").set_flip_h(true)
 
 func _fixed_process(delta):
+	# The Death Timer
+	if dying:
+		die_timer += delta
+		if die_timer > 3:
+			post_die()
+		
 	# Get Player Input
 	var get_input_allowed = true
 	var left_pressed = false
@@ -122,7 +129,8 @@ func _fixed_process(delta):
 		movement *= MOVEMENT_SPEED
 		
 		# Change horizontal velocity
-		velocity.x = lerp(velocity.x, movement, ACCELERATION)
+		if !dying:
+			velocity.x = lerp(velocity.x, movement, ACCELERATION)
 		
 		# Moving Platform
 	
@@ -363,6 +371,13 @@ func set_camera_limits( left, top, right, bottom ):
 	get_node("Camera2D").set_limit(MARGIN_RIGHT, right)
 	get_node("Camera2D").set_limit(MARGIN_BOTTOM, bottom)
 	
+func freeze_camera():
+	var c = get_node("Camera2D").get_camera_screen_center()
+	get_node("Camera2D").set_limit(MARGIN_TOP, c.y - 120)
+	get_node("Camera2D").set_limit(MARGIN_LEFT, c.x - 160)    
+	get_node("Camera2D").set_limit(MARGIN_RIGHT, c.x + 160)
+	get_node("Camera2D").set_limit(MARGIN_BOTTOM, c.y + 120)
+	
 func post_die():
 	get_tree().reload_current_scene()
 
@@ -375,20 +390,32 @@ func _on_ledge_det_body_exit( body ):
 	if body.get_name() == "Main TileMap":
 		on_ledge = false
 
-func _on_ledge_det_area_enter( area ):
+func _on_body__col_area_enter( area ):
 	var body = area.get_parent()
+	
 	if body.has_node("door_col"):
 		door_node = body
 		on_door = true
-		print("entering " + body.get_name())
-	if body.has_node("death_col"):
+		
+	if area.get_name() == "death_col" && !climbing && !entering_door:
 		dying = true
 		get_node("CollisionShape2D").set_trigger(true)
 		get_node("CollisionShape2D2").set_trigger(true)
-		
-func _on_ledge_det_area_exit( area ):
+		freeze_camera()
+		velocity.y = -150
+		velocity.x = rand_range(-150, 150)
+		get_parent().get_node("light_effects/screen_glow").show()
+		get_parent().get_node("light_effects/screen_glow").set_pos(Vector2(160, 120) + (self.get_pos() - get_node("Camera2D").get_camera_screen_center()))
+		self.get_node("screen_glow").hide()
+		self.set_z(5)
+		get_node("AnimationPlayer").stop()
+		var frame = rand_range(31,33)
+		get_node("AnimatedSprite").set_frame(frame)
+		die_timer = 0
+
+
+func _on_body__col_area_exit( area ):
 	var body = area.get_parent()
 	if body.has_node("door_col"):
 		if body == door_node:
 			on_door = false
-			print("exiting " + body.get_name())

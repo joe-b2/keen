@@ -433,12 +433,31 @@ visibility/visible = false
 z/z = 4
 texture = ExtResource( 46 )
 
-[connection signal="area_enter" from="ledge_det" to="." method="_on_ledge_det_area_enter"]
+[node name="body _col" type="Area2D" parent="."]
 
-[connection signal="area_exit" from="ledge_det" to="." method="_on_ledge_det_area_exit"]
+editor/display_folded = true
+transform/pos = Vector2( 0, 0.1 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="body _col"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [connection signal="body_enter" from="ledge_det" to="." method="_on_ledge_det_body_enter"]
 
 [connection signal="body_exit" from="ledge_det" to="." method="_on_ledge_det_body_exit"]
+
+[connection signal="area_enter" from="body _col" to="." method="_on_body__col_area_enter"]
+
+[connection signal="area_exit" from="body _col" to="." method="_on_body__col_area_exit"]
 
 

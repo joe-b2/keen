@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://scripts/enemies/slug.gd" type="Script" id=1]
 [ext_resource path="res://gfx/enemys/slug/0.png" type="Texture" id=2]
@@ -98,6 +98,11 @@ extents = Vector2( 1.64391, 1.74196 )
 
 custom_solver_bias = 0.0
 extents = Vector2( 1.779, 1.73697 )
+
+[sub_resource type="RectangleShape2D" id=9]
+
+custom_solver_bias = 0.0
+extents = Vector2( 13, 10 )
 
 [node name="slug" type="KinematicBody2D"]
 
@@ -241,6 +246,24 @@ __meta__ = { "_edit_lock_":true }
 
 transform/pos = Vector2( -9.86159, -0.405271 )
 shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[node name="death_col" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 9 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 6 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="death_col"]
+
+transform/pos = Vector2( 0, 6 )
+shape = SubResource( 9 )
 trigger = false
 _update_shape_index = 0
 

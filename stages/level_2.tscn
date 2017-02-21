@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://stages/level_2.gd" type="Script" id=1]
 [ext_resource path="res://scenes/grassy_tileset.tres" type="TileSet" id=2]
@@ -9,9 +9,10 @@
 [ext_resource path="res://scenes/map_objects/one_way_collision_block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/map_objects/small_stone_door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/map_objects/large_gate_door.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=10]
-[ext_resource path="res://gfx/lighting/player_mask.png" type="Texture" id=11]
-[ext_resource path="res://scenes/fade_screen.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/map_objects/spike.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://gfx/lighting/player_mask.png" type="Texture" id=12]
+[ext_resource path="res://scenes/fade_screen.tscn" type="PackedScene" id=13]
 
 [node name="Node" type="Node"]
 
@@ -58,8 +59,6 @@ tile_data = IntArray( 0, 35, 2, 35, 3, 35, 4, 35, 6, 35, 8, 35, 9, 35, 10, 35, 1
 __meta__ = { "_edit_lock_":true }
 
 [node name="Map Objects" type="Node" parent="."]
-
-editor/display_folded = true
 
 [node name="pole" parent="Map Objects" instance=ExtResource( 3 )]
 
@@ -118,6 +117,10 @@ transform/pos = Vector2( 288, 448 )
 
 transform/pos = Vector2( 1936, 160 )
 
+[node name="slug4" parent="Map Objects" instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 1456, 320 )
+
 [node name="one_way_collision_block" parent="Map Objects" instance=ExtResource( 7 )]
 
 transform/pos = Vector2( 240, 96 )
@@ -168,7 +171,119 @@ transform/pos = Vector2( 1648, 272 )
 other_door_location = Vector2( 64, 128 )
 new_scene_bot_right = Vector2( 1600, 480 )
 
-[node name="Player" parent="." instance=ExtResource( 10 )]
+[node name="spike" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 592, 432 )
+
+[node name="spike2" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 608, 432 )
+
+[node name="spike3" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 624, 432 )
+
+[node name="spike4" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 640, 432 )
+
+[node name="spike5" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 656, 432 )
+
+[node name="spike6" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 672, 432 )
+
+[node name="spike7" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 688, 432 )
+
+[node name="spike8" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 704, 432 )
+
+[node name="spike9" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 720, 432 )
+
+[node name="spike10" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 736, 432 )
+
+[node name="spike11" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 752, 432 )
+
+[node name="spike12" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 768, 432 )
+
+[node name="spike13" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 784, 432 )
+
+[node name="spike14" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 800, 432 )
+
+[node name="spike15" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 816, 432 )
+
+[node name="spike16" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 832, 432 )
+
+[node name="spike17" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 848, 432 )
+
+[node name="spike18" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1776, 400 )
+
+[node name="spike19" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1792, 400 )
+
+[node name="spike20" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1808, 400 )
+
+[node name="spike21" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1856, 400 )
+
+[node name="spike22" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1872, 400 )
+
+[node name="spike23" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1888, 400 )
+
+[node name="spike24" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1904, 400 )
+
+[node name="spike25" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1920, 400 )
+
+[node name="spike26" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1968, 400 )
+
+[node name="spike27" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 1984, 400 )
+
+[node name="spike28" parent="Map Objects" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 2000, 400 )
+
+[node name="Player" parent="." instance=ExtResource( 11 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 1552, 256 )
@@ -210,11 +325,10 @@ scale = Vector2( 1, 1 )
 
 visibility/visible = false
 transform/pos = Vector2( 160, 120 )
-transform/scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 __meta__ = { "_edit_lock_":true }
 
-[node name="fade_screen" parent="light_effects" instance=ExtResource( 12 )]
+[node name="fade_screen" parent="light_effects" instance=ExtResource( 13 )]
 
 transform/pos = Vector2( 160, 120 )
 
