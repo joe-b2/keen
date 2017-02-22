@@ -175,6 +175,7 @@ func _fixed_process(delta):
 		# More Poles
 		if !touching_pole:
 			on_pole = false
+			jump_off_pole = false
 			
 		if (touching_pole && !on_pogo):
 			if (up_pressed || down_pressed):
@@ -199,6 +200,9 @@ func _fixed_process(delta):
 		# Can jump?
 		var could_jump = can_jump
 		can_jump = is_move_and_slide_on_floor()
+		
+		if can_jump:
+			jump_off_pole = false
 		 
 		if (on_mp || on_pole) && !shooting:
 			can_jump = true
@@ -240,7 +244,7 @@ func _fixed_process(delta):
 			on_pole = false
 			can_jump = false
 		
-		if pogo_just_pressed && !shooting:
+		if pogo_just_pressed && !shooting && !jump_off_pole:
 			if on_pogo:
 				on_pogo = false 
 				wants_to_jump = false
@@ -397,16 +401,17 @@ func _on_body__col_area_enter( area ):
 		door_node = body
 		on_door = true
 		
-	if area.get_name() == "death_col" && !climbing && !entering_door:
+	if area.get_name() == "death_col" && !climbing && !entering_door && abs(self.get_pos().y - get_node("Camera2D").get_camera_screen_center().y) < 120:
 		dying = true
 		get_node("CollisionShape2D").set_trigger(true)
 		get_node("CollisionShape2D2").set_trigger(true)
 		freeze_camera()
 		velocity.y = -150
 		velocity.x = rand_range(-150, 150)
-		get_parent().get_node("light_effects/screen_glow").show()
-		get_parent().get_node("light_effects/screen_glow").set_pos(Vector2(160, 120) + (self.get_pos() - get_node("Camera2D").get_camera_screen_center()))
-		self.get_node("screen_glow").hide()
+		if get_node("screen_glow").is_visible():
+			get_parent().get_node("light_effects/screen_glow").show()
+			get_parent().get_node("light_effects/screen_glow").set_pos(Vector2(160, 120) + (self.get_pos() - get_node("Camera2D").get_camera_screen_center()))
+			self.get_node("screen_glow").hide()
 		self.set_z(5)
 		get_node("AnimationPlayer").stop()
 		var frame = rand_range(31,33)
