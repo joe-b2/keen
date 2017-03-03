@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://stages/level_2.gd" type="Script" id=1]
 [ext_resource path="res://scenes/grassy_tileset.tres" type="TileSet" id=2]
@@ -11,9 +11,10 @@
 [ext_resource path="res://scenes/map_objects/large_gate_door.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/map_objects/spike.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/map_objects/top_spike.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=12]
-[ext_resource path="res://gfx/lighting/player_mask.png" type="Texture" id=13]
-[ext_resource path="res://scenes/fade_screen.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/items/droplet.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/keen.tscn" type="PackedScene" id=13]
+[ext_resource path="res://gfx/lighting/player_mask.png" type="Texture" id=14]
+[ext_resource path="res://scenes/fade_screen.tscn" type="PackedScene" id=15]
 
 [node name="Node" type="Node"]
 
@@ -288,7 +289,267 @@ transform/pos = Vector2( 2000, 400 )
 
 transform/pos = Vector2( 1040, 368 )
 
-[node name="Player" parent="." instance=ExtResource( 12 )]
+[node name="droplet" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1504, 176 )
+
+[node name="droplet2" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1520, 160 )
+
+[node name="droplet3" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1536, 160 )
+
+[node name="droplet4" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1552, 176 )
+
+[node name="droplet5" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1424, 240 )
+
+[node name="droplet6" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1408, 224 )
+
+[node name="droplet7" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1392, 224 )
+
+[node name="droplet8" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1376, 224 )
+
+[node name="droplet9" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1360, 240 )
+
+[node name="droplet10" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 960, 32 )
+
+[node name="droplet11" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 976, 32 )
+
+[node name="droplet12" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 992, 32 )
+
+[node name="droplet13" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1008, 32 )
+
+[node name="droplet14" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1024, 32 )
+
+[node name="droplet15" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1040, 32 )
+
+[node name="droplet16" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1056, 32 )
+
+[node name="droplet17" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1120, 96 )
+
+[node name="droplet18" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1136, 112 )
+
+[node name="droplet19" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1152, 128 )
+
+[node name="droplet20" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 832, 144 )
+
+[node name="droplet21" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 848, 128 )
+
+[node name="droplet22" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 816, 128 )
+
+[node name="droplet23" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 832, 80 )
+
+[node name="droplet24" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 832, 112 )
+
+[node name="droplet25" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 848, 96 )
+
+[node name="droplet26" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 816, 96 )
+
+[node name="droplet27" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 800, 112 )
+
+[node name="droplet28" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 864, 112 )
+
+[node name="droplet29" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 672, 144 )
+
+[node name="droplet30" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 656, 128 )
+
+[node name="droplet31" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 640, 128 )
+
+[node name="droplet32" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 624, 144 )
+
+[node name="droplet33" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 464, 96 )
+
+[node name="droplet34" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 432, 80 )
+
+[node name="droplet35" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 464, 64 )
+
+[node name="droplet36" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 432, 48 )
+
+[node name="droplet37" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 400, 96 )
+
+[node name="droplet38" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 400, 64 )
+
+[node name="droplet39" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 368, 80 )
+
+[node name="droplet40" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 368, 48 )
+
+[node name="droplet41" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 288, 384 )
+
+[node name="droplet42" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 288, 352 )
+
+[node name="droplet43" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 272, 368 )
+
+[node name="droplet44" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 304, 368 )
+
+[node name="droplet45" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 400, 304 )
+
+[node name="droplet46" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 720, 320 )
+
+[node name="droplet47" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 752, 320 )
+
+[node name="droplet48" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 368, 320 )
+
+[node name="droplet49" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 336, 336 )
+
+[node name="droplet50" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 160, 112 )
+
+[node name="droplet51" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 160, 144 )
+
+[node name="droplet52" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 160, 176 )
+
+[node name="droplet53" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 160, 208 )
+
+[node name="droplet54" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 160, 80 )
+
+[node name="droplet55" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1792, 128 )
+
+[node name="droplet56" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1824, 144 )
+
+[node name="droplet57" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1776, 144 )
+
+[node name="droplet58" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1808, 128 )
+
+[node name="droplet59" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1872, 288 )
+
+[node name="droplet60" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1888, 272 )
+
+[node name="droplet61" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1904, 272 )
+
+[node name="droplet62" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1920, 288 )
+
+[node name="droplet63" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1936, 32 )
+
+[node name="droplet64" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1920, 48 )
+
+[node name="droplet65" parent="Map Objects" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 1952, 48 )
+
+[node name="Player" parent="." instance=ExtResource( 13 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 1552, 256 )
@@ -330,10 +591,10 @@ scale = Vector2( 1, 1 )
 
 visibility/visible = false
 transform/pos = Vector2( 160, 120 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 __meta__ = { "_edit_lock_":true }
 
-[node name="fade_screen" parent="light_effects" instance=ExtResource( 14 )]
+[node name="fade_screen" parent="light_effects" instance=ExtResource( 15 )]
 
 transform/pos = Vector2( 160, 120 )
 

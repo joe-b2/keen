@@ -400,6 +400,9 @@ func _on_body__col_area_enter( area ):
 	if body.has_node("door_col"):
 		door_node = body
 		on_door = true
+	
+	if area.get_name() == "drop_col":
+		body.die()
 		
 	if area.get_name() == "death_col" && !climbing && !entering_door && abs(self.get_pos().y - get_node("Camera2D").get_camera_screen_center().y) < 120:
 		dying = true
